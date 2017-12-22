@@ -60,6 +60,7 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
 @property (strong, nonatomic) UILabel *moveAndScaleLabel;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIButton *chooseButton;
+@property (strong, nonatomic) UIButton *rotateLeftButton;
 
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (strong, nonatomic) UIRotationGestureRecognizer *rotationGestureRecognizer;
@@ -70,6 +71,8 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
 @property (strong, nonatomic) NSLayoutConstraint *cancelButtonLeadingConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *chooseButtonBottomConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *chooseButtonTrailingConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *rotateLeftButtonBottomConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *rotateLeftButtonTrailingConstraint;
 
 @end
 
@@ -92,9 +95,11 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
         _portraitMoveAndScaleLabelTopAndCropViewTopVerticalSpace = 64.0f;
         _portraitCropViewBottomAndCancelButtonBottomVerticalSpace = 21.0f;
         _portraitCropViewBottomAndChooseButtonBottomVerticalSpace = 21.0f;
+        _portraitCropViewBottomAndRotateLeftButtonBottomVerticalSpace = 21.0f;
         _portraitCancelButtonLeadingAndCropViewLeadingHorizontalSpace = 13.0f;
         _portraitCropViewTrailingAndChooseButtonTrailingHorizontalSpace = 13.0;
-        
+        _portraitCropViewTrailingAndRotateLeftButtonTrailingHorizontalSpace = 13.0;
+
         _landscapeCircleMaskRectInnerEdgeInset = 45.0f;
         _landscapeSquareMaskRectInnerEdgeInset = 45.0f;
         _landscapeMoveAndScaleLabelTopAndCropViewTopVerticalSpace = 12.0f;
@@ -146,7 +151,8 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
     [self.view addSubview:self.moveAndScaleLabel];
     [self.view addSubview:self.cancelButton];
     [self.view addSubview:self.chooseButton];
-    
+    [self.view addSubview:self.rotateLeftButton];
+
     [self.view addGestureRecognizer:self.doubleTapGestureRecognizer];
     [self.view addGestureRecognizer:self.rotationGestureRecognizer];
 }
@@ -245,7 +251,23 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
                                                                             toItem:self.cancelButton attribute:NSLayoutAttributeBottom multiplier:1.0f
                                                                           constant:constant];
         [self.view addConstraint:self.cancelButtonBottomConstraint];
-        
+
+        // --------------------
+        // The button "Rotate left".
+        // --------------------
+
+        constant = self.portraitCropViewTrailingAndRotateLeftButtonTrailingHorizontalSpace;
+        self.rotateLeftButtonTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual
+                                                                              toItem:self.rotateLeftButton attribute:NSLayoutAttributeTrailing multiplier:1.0f
+                                                                            constant:constant];
+        [self.view addConstraint:self.rotateLeftButtonTrailingConstraint];
+
+        constant = self.portraitCropViewBottomAndRotateLeftButtonBottomVerticalSpace;
+        self.rotateLeftButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.rotateLEftButton attribute:NSLayoutAttributeBottom multiplier:1.0f
+                                                                          constant:constant];
+        [self.view addConstraint:self.rotateLeftButtonBottomConstraint];
+
         // --------------------
         // The button "Choose".
         // --------------------
@@ -328,7 +350,7 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
         _moveAndScaleLabel = [[UILabel alloc] init];
         _moveAndScaleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _moveAndScaleLabel.backgroundColor = [UIColor clearColor];
-        _moveAndScaleLabel.text = RSKLocalizedString(@"Move and Scale", @"Move and Scale label");
+        _moveAndScaleLabel.text = RSKLocalizedString(@"Move or Scale", @"Move or Scale label");
         _moveAndScaleLabel.textColor = [UIColor whiteColor];
         _moveAndScaleLabel.opaque = NO;
     }
@@ -345,6 +367,18 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
         _cancelButton.opaque = NO;
     }
     return _cancelButton;
+}
+
+- (UIButton *)rotateLeftButton
+{
+    if (!_rotateLeftButton) {
+        _rotateLeftButton = [[UIButton alloc] init];
+        _rotateLeftButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_rotateLeftButton setTitle:RSKLocalizedString(@"Rotate Left", @"Rotate left button") forState:UIControlStateNormal];
+        [_rotateLeftButton addTarget:self action:@selector(onRotateLeftButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
+        _rotateLeftButton.opaque = NO;
+    }
+    return _rotateLeftButton;
 }
 
 - (UIButton *)chooseButton
@@ -517,6 +551,11 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
 - (void)onCancelButtonTouch:(UIBarButtonItem *)sender
 {
     [self cancelCrop];
+}
+
+- (void)onRotateLeftButtonTouch:(UIBarButtonItem *)sender
+{
+
 }
 
 - (void)onChooseButtonTouch:(UIBarButtonItem *)sender
