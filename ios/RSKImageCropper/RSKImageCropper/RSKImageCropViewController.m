@@ -291,7 +291,9 @@ static const CGFloat kLayoutImageScrollViewAnimationDuration = 0.25;
             self.cancelButtonBottomConstraint.constant = self.portraitCropViewBottomAndCancelButtonBottomVerticalSpace;
             self.cancelButtonLeadingConstraint.constant = self.portraitCancelButtonLeadingAndCropViewLeadingHorizontalSpace;
             self.chooseButtonBottomConstraint.constant = self.portraitCropViewBottomAndChooseButtonBottomVerticalSpace;
+            self.rotateLeftButtonBottomConstraint.constant = self.portraitCropViewBottomAndRotateLeftButtonBottomVerticalSpace;
             self.chooseButtonTrailingConstraint.constant = self.portraitCropViewTrailingAndChooseButtonTrailingHorizontalSpace;
+            self.rotateLeftButtonTrailingConstraint.constant = self.portraitCropViewTrailingAndRotateLeftButtonTrailingHorizontalSpace;
         } else {
             self.moveAndScaleLabelTopConstraint.constant = self.landscapeMoveAndScaleLabelTopAndCropViewTopVerticalSpace;
             self.cancelButtonBottomConstraint.constant = self.landscapeCropViewBottomAndCancelButtonBottomVerticalSpace;

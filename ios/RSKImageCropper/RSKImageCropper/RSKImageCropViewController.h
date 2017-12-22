@@ -181,6 +181,11 @@ typedef NS_ENUM(NSUInteger, RSKImageCropMode) {
  */
 @property (strong, nonatomic, readonly) UIButton *chooseButton;
 
+/**
+ The Choose Button.
+ */
+@property (strong, nonatomic, readonly) UIButton *rotateLeftButton;
+
 /// -------------------------------------------
 /// @name Checking of the Interface Orientation
 /// -------------------------------------------
@@ -222,6 +227,11 @@ typedef NS_ENUM(NSUInteger, RSKImageCropMode) {
 @property (assign, nonatomic) CGFloat portraitCropViewBottomAndChooseButtonBottomVerticalSpace;
 
 /**
+ The vertical space between the bottom of the crop view and the bottom of the 'RotateLeft' button in portrait orientation. Default value is `21.0f`.
+ */
+@property (assign, nonatomic) CGFloat portraitCropViewBottomAndRotateLeftButtonBottomVerticalSpace;
+
+/**
  The horizontal space between the leading of the 'Cancel' button and the leading of the crop view in portrait orientation. Default value is `13.0f`.
  */
 @property (assign, nonatomic) CGFloat portraitCancelButtonLeadingAndCropViewLeadingHorizontalSpace;
@@ -230,6 +240,11 @@ typedef NS_ENUM(NSUInteger, RSKImageCropMode) {
  The horizontal space between the trailing of the crop view and the trailing of the 'Choose' button in portrait orientation. Default value is `13.0f`.
  */
 @property (assign, nonatomic) CGFloat portraitCropViewTrailingAndChooseButtonTrailingHorizontalSpace;
+
+/**
+ The horizontal space between the trailing of the crop view and the trailing of the 'RotateLeft' button in portrait orientation. Default value is `13.0f`.
+ */
+@property (assign, nonatomic) CGFloat portraitCropViewTrailingAndRotateLeftButtonTrailingHorizontalSpace;
 
 /**
  The inset of the circle mask rect's area within the crop view's area in landscape orientation. Default value is `45.0f`.
